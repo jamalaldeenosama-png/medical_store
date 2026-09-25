@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MedicalStoreApp());
+  runApp(const MedicalStoreApp());
 }
 
 class MedicalStoreApp extends StatelessWidget {
+  const MedicalStoreApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'متجر المنتجات الطبية',
+      title: 'الصيدلية الرقمية',
       theme: ThemeData(
         primarySwatch: Colors.teal,
-        scaffoldBackgroundColor: Colors.grey[100],
+        scaffoldBackgroundColor: const Color(0xFFF4F6F8),
+        fontFamily: 'Roboto',
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatelessWidget {
-  final List<Map<String, dynamic>> products = [
+  const HomeScreen({Key? key}) : super(key: key);
+
+  final List<Map<String, String>> products = const [
     {
       'name': 'فيتامين سي فوّار 1000 ملغ',
       'category': 'مكملات غذائية',
@@ -47,75 +52,108 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('الصيدلية الرقمية', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'الصيدلية الرقمية',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: Colors.teal,
+        elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart, color: Colors.white),
             onPressed: () {},
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // شريط البحث
             TextField(
               decoration: InputDecoration(
                 hintText: 'ابحث عن دواء، مستلزمات، أو أجهزة...',
-                prefixIcon: Icon(Icons.search, color: Colors.teal),
+                prefixIcon: const Icon(Icons.search, color: Colors.teal),
                 filled: true,
                 fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+
+            // صندوق رفع الوصفة الطبية
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.teal[50],
+                color: Colors.teal.shade50,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.teal.shade200),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.camera_alt, size: 40, color: Colors.teal),
-                  SizedBox(width: 16),
+                  const Icon(Icons.camera_alt, size: 40, color: Colors.teal),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('هل لديك وصفة طبية؟', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                      children: const [
+                        Text(
+                          'هل لديك وصفة طبية؟',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.teal,
+                          ),
+                        ),
                         SizedBox(height: 4),
-                        Text('صور الوصفة وارفعها وسنقوم بتوصيل الأدوية إليك.', style: TextStyle(color: Colors.grey[700], fontSize: 12)),
+                        Text(
+                          'صور الوصفة وارفعها وسنقوم بتوصيل الأدوية إليك.',
+                          style: TextStyle(color: Colors.black54, fontSize: 12),
+                        ),
                       ],
                     ),
                   ),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.teal),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.teal,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                     onPressed: () {},
-                    child: Text('رفع', style: TextStyle(color: Colors.white)),
+                    child: const Text('رفع'),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 24),
+
+            // عنوان القسم
+            const Text(
               'المنتجات الشائعة',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.teal[800]),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 12),
+
+            // شبكة عرض المنتجات
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 0.75,
+                childAspectRatio: 0.72,
               ),
               itemCount: products.length,
               itemBuilder: (context, index) {
@@ -126,9 +164,10 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        spreadRadius: 1,
-                        blurRadius: 5,
+                        color: Colors.grey.withOpacity(0.08),
+                        spreadRadius: 2,
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -138,46 +177,71 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                            color: Colors.teal.shade50,
+                            borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(12),
+                            ),
                           ),
-                          child: Center(
-                            child: Icon(Icons.medical_services, size: 50, color: Colors.teal),
+                          child: const Center(
+                            child: Icon(
+                              Icons.medical_services,
+                              size: 45,
+                              color: Colors.teal,
+                            ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              product['category'],
-                              style: TextStyle(color: Colors.teal, fontSize: 10, fontWeight: FontWeight.bold),
+                              product['category']!,
+                              style: const TextStyle(
+                                color: Colors.teal,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 3),
                             Text(
-                              product['name'],
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                              product['name']!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                color: Colors.black87,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 4),
+                            const SizedBox(height: 4),
                             Text(
-                              product['price'],
-                              style: TextStyle(color: Colors.grey[800], fontWeight: FontWeight.w600, fontSize: 13),
+                              product['price']!,
+                              style: const TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                              ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.teal,
-                                  padding: EdgeInsets.symmetric(vertical: 4),
-                                  minimumSize: Size(0, 30),
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(vertical: 0),
+                                  minimumSize: const Size(0, 32),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
                                 ),
                                 onPressed: () {},
-                                child: Text('إضافة للسلة', style: TextStyle(fontSize: 12, color: Colors.white)),
+                                child: const Text(
+                                  'إضافة للسلة',
+                                  style: TextStyle(fontSize: 11),
+                                ),
                               ),
                             ),
                           ],
